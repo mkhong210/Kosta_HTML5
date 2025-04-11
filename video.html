@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>비디오</title>
+    <!-- 25.04.11 - 3 -->
+  </head>
+  <body>
+    <video src="asset/duck.mp4" type="video/mp4" id="vod"></video>
+
+    <button onclick="vodPlay()">재생</button>
+    <button onclick="vodPause()">일시정지</button>
+    <!-- 재생시간 표시 -->
+    volume :
+    <input type="range" id="vcontrol" max="1" onchange="updatevolume()" />
+    <script>
+      var vod = document.getElementById("vod");
+      function vodPlay() {
+        vod.play();
+      }
+      function vodPause() {
+        vod.pause();
+      }
+      function updatevolume() {
+        vod.volume = document.getElementById("vcontrol").value;
+      }
+    </script>
+  </body>
+</html>

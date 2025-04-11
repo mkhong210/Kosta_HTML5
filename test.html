@@ -1,0 +1,63 @@
+<h1>현재 날씨 정보</h1>
+<div id="result"></div>
+<p id="weather"></p>
+
+<script>
+  function position() {
+    if (navigator.geolocation) {
+      //GPS 기반
+      navigator.geolocation.getCurrentPosition(currentPosition, ErrorCallback); // 성공하면 currentPosition 호출
+    }
+  }
+  function getweather(lat, log) {
+    var apiKey = "d3982e2b60eedc034718bec1c65af400";
+    var apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${log}&units=metric&appid=${apiKey}`;
+
+    fetch(apiUrl)
+      .then(function (res) {
+        //응답받음
+        console.log(res);
+        return res.json();
+      })
+      .then(function (data) {
+        //리턴받은 json을 가지고 접근할 수 있다
+        console.log(data);
+        let description = data.weather[0].description;
+        let temperature = data.main.temp;
+        let cityName = data.name;
+
+        let weatherInfo = `도시: ${cityName}<br> 날씨: ${description} <br> 온도: ${temperature}`;
+        //let weatherInfo = '도시:'+cityName +'<br>'+'날씨'+temperature;
+        document.getElementById("weather").innerHTML = weatherInfo;
+      });
+  }
+
+  function currentPosition(position) {
+    let lat = position.coords.latitude;
+    let log = position.coords.longitude;
+    document.getElementById("result").innerHTML =
+      "위도 :" + lat + " 경도 :" + log + "<p>";
+
+    //날씨 정보 가져오기
+    getweather(lat, log);
+  }
+
+  function ErrorCallback(err) {
+    switch (err.code) {
+      case err.PERMISSON_DENIED: //권한허용을 허용하지 않음을 클릭시
+        document.getElementById("result").innerHTML =
+          "현재 위치 정보에 대한 권한이 없습니다.";
+        break;
+      case err.POSITION_UNAVAILABLE:
+        document.getElementById("result").innerHTML =
+          "현재 위치 정보를 구할 수 없습니다.";
+        break;
+      case err.TIMEOUT:
+        document.getElementById("result").innerHTML =
+          "시간 제한을 초과했습니다.";
+        break;
+    }
+  }
+
+  position();
+</script>

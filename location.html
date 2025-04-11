@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>나의 현재 위치</title>
+    <!-- 25.04.11 - 4 -->
+  </head>
+  <body>
+    <button onclick="MyPosition()">나의 현재 위치</button>
+    <p></p>
+    <div id="result"></div>
+
+    <script>
+      function MyPosition() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            currentPosition,
+            errorCallback
+          );
+        }
+      }
+
+      // 위도, 경도,  위치 정보 가져오기
+      function currentPosition(position) {
+        let lat = position.coords.latitude; // 위도
+        let lng = position.coords.longitude; // 경도
+        document.getElementById("result").innerHTML =
+          "위도 : " + lat + "/ 경도 : " + lng;
+      }
+
+      // 에러 시 작동
+      function errorCallback(error) {
+        switch (error.code) {
+          case error.PERMISSION_DENIDED:
+            //  위치 권한을 허용하지 않으면 실행
+            document.getElementById("result").innerHTML =
+              "현재 위치 정보에 대한 권한이 없습니다.";
+            break;
+          case error.POSITION_UNAVAIL:
+            // 권한은 있으나 위치 정보를 알 수 없을 때 실행
+            document.getElementById("result").innerHTML =
+              "현재 위치 정보를 구할 수 없습니다.";
+            break;
+          case error.TIMEOUT:
+            //  시간제한 초과 시 실행
+            document.getElementById("result").innerHTML =
+              "현재 위치 정보에 대한 권한이 없습니다.";
+            break;
+        }
+      }
+    </script>
+  </body>
+</html>
