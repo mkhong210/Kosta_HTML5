@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly"></script>
+
     <title>위치 구글 맵과 연동</title>
     <!-- 25.04.11 - 7 -->
   </head>
@@ -21,7 +21,7 @@
       }
 
       function getWeather(lat, lng) {
-        var apiKey = "d3982e2b60eedc034718bec1c65af400";
+        var apiKey = "";
         var apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&appid=${apiKey}`;
 
         fetch(apiUrl)
