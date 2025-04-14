@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이미지 드래그</title>
+    <!-- 25.04.14 - 3 -->
+
+    <style>
+      #itemlist,
+      #cart {
+        width: 500px;
+        height: 200px;
+        padding: 10px;
+        margin: 20px;
+        border: 2px solid;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>이미지 요소 드래그 앤 드롭</h2>
+
+    <h4>베스트 셀러 리스트</h4>
+    <div id="itemlist" ondrop="drop(event)" ondragover="dragover(event)">
+      <img
+        src="asset/react.jpg"
+        alt="react"
+        id="react"
+        width="100"
+        height="150"
+        hspace="20"
+        draggable="true"
+        ondragstart="dragstart(event)"
+      />
+      <img
+        src="asset/python.jpg"
+        alt="python"
+        id="python"
+        width="100"
+        height="150"
+        hspace="20"
+        draggable="true"
+        ondragstart="dragstart(event)"
+      />
+      <img
+        src="asset/node.jpg"
+        alt="node"
+        id="node"
+        width="100"
+        height="150"
+        hspace="20"
+        draggable="true"
+        ondragstart="dragstart(event)"
+      />
+    </div>
+
+    <br /><br /><br />
+
+    <h4>쇼핑카트</h4>
+    <div id="cart" ondrop="drop(event)" ondragover="dragover(event)"></div>
+
+    <script>
+      function dragstart(e) {
+        e.dataTransfer.setData("books", e.target.id);
+        console.log(e.target.id);
+      }
+      function dragover(e) {
+        e.preventDefault();
+      }
+      function drop(e) {
+        var id = e.target.getAttribute("id"); // cart
+        var data = e.dataTransfer.getData("books"); // item id
+        console.log(data);
+
+        e.target.appendChild(document.getElementById(data));
+        if (id == "cart") {
+          alert("카트에 도서를 담았습니다.");
+        } else {
+          alert("도서를 카트에서 뺐습니다.");
+        }
+      }
+    </script>
+  </body>
+</html>

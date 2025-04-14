@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>외부 이미지 드래그</title>
+    <!-- 25.04.14 - 4 -->
+    <style>
+      #droparea {
+        width: 1024px;
+        height: 768px;
+        border: 5px solid black;
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="droparea"
+      ondragover="dragover(event)"
+      ondrop="drop(event)"
+      ondragenter="dragenter(event)"
+    ></div>
+
+    <script>
+      var droparea = document.getElementById("droparea");
+      var dropImg = document.createElement("img");
+
+      function dragover(e) {
+        e.preventDefault();
+      }
+      function dragenter(e) {
+        e.preventDefault();
+      }
+      function drop(e) {
+        var file = e.dataTransfer.files[0];
+        var reader = new FileReader();
+
+        reader.onload = (function (theFile) {
+          return function (e) {
+            alert("ondrop");
+            dropImg.src = e.target.result;
+            droparea.appendChild(dropImg);
+          };
+        })(file);
+
+        reader.readAsDataURL(file);
+
+        e.stopPropagation(); // 이벤트 버블링 막기
+        e.preventDefault();
+      }
+    </script>
+  </body>
+</html>

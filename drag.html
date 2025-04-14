@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>드래그</title>
+    <!-- 25.04.14 - 1 -->
+
+    <style>
+      #box1,
+      #box2,
+      #box3 {
+        width: 75px;
+        height: 70px;
+        padding: 5px;
+        margin: 5px;
+      }
+      #box1 {
+        background-color: red;
+      }
+      #box2 {
+        background-color: green;
+      }
+      #box3 {
+        background-color: blue;
+      }
+
+      /* target */
+      #target {
+        width: 500px;
+        height: 200px;
+        padding: 5px;
+        margin: 20px;
+        background-color: aliceblue;
+        border: 2px solid salmon;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>draggable 속성 설정</h2>
+    <div id="box" ondrop="drop(event)" ondragover="dragover(event)">
+      <!-- 원래 drop만 해뒀다가 원래 영역으로 돌아갔을 때를 처리하기 위해서 dragover도 해야함  -->
+      <div
+        id="box1"
+        draggable="true"
+        ondragstart="dragstart(event)"
+        ondrag="dragging(event)"
+        ondragend="dragend(event)"
+      ></div>
+      <div id="box2" draggable="false"></div>
+      <div id="box3" draggable="false"></div>
+    </div>
+
+    <div
+      id="target"
+      ondragenter="dragenter(event)"
+      ondragover="dragover(event)"
+      ondragleave="dragleave(event)"
+      ondrop="drop(event)"
+    ></div>
+
+    <div id="result"></div>
+    <div id="result2"></div>
+
+    <script>
+      function dragstart(e) {
+        document.getElementById("result").innerHTML =
+          "드래그가 시작되었습니다.";
+        e.dataTransfer.setData("Text", e.target.id);
+      }
+      function dragging(e) {
+        document.getElementById("result").innerHTML = "드래그 중입니다.";
+      }
+      function dragend(e) {
+        document.getElementById("result").innerHTML = "드래그가 끝났습니다.";
+      }
+
+      // target
+      function dragenter(e) {
+        document.getElementById("result2").innerHTML =
+          "Target 영역에 진입했습니다.";
+      }
+      function dragover(e) {
+        document.getElementById("result2").innerHTML =
+          "Target 영역 위에 있습니다.";
+        e.preventDefault();
+      }
+      function dragleave(e) {
+        document.getElementById("result2").innerHTML =
+          "Target 영역에서 나갔습니다.";
+      }
+
+      // drop
+      function drop(e) {
+        // document.getElementById("result2").innerHTML = "";
+        var id = e.target.getAttribute("id");
+        console.log(id); // target
+        var data = e.dataTransfer.getData("Text");
+        console.log(data); // box1
+
+        e.target.appendChild(document.getElementById(data));
+
+        if (id == "target") {
+          alert("target에 drop 되었습니다.");
+        } else {
+          // id == box
+          alert("원래 영역에 드롭되었습니다.");
+        }
+      }
+    </script>
+  </body>
+</html>
