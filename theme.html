@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>테마</title>
+    <!-- 25.04.15 - 3 -->
+    <style>
+      body.light {
+        background-color: aliceblue;
+        color: #333;
+      }
+      body.dark {
+        background-color: #333;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>테마 변경</h1>
+
+    <label>
+      <input type="radio" name="theme" value="light" checked /> Light
+    </label>
+    <label> <input type="radio" name="theme" value="dark" />Dark </label>
+
+    <script>
+      const savedTheme = localStorage.getItem("selectedTheme");
+      if (savedTheme) {
+        document.body.classList.add(savedTheme);
+        const selectedRadio = document.querySelector(
+          `input[value="${savedTheme}"]`
+        );
+
+        if (selectedRadio) {
+          selectedRadio.checked = true;
+        }
+      }
+
+      const themeRadios = document.querySelectorAll('input[name="theme"]');
+      console.log(themeRadios);
+      themeRadios.forEach(function (radio) {
+        radio.addEventListener("change", function () {
+          const selectedTheme = radio.value;
+          // document.body.classList.remove("light", "dark");
+          // document.body.classList.add(selectedTheme);
+
+          document.body.className = selectedTheme;
+
+          localStorage.setItem("selectedTheme", selectedTheme);
+        });
+      });
+    </script>
+  </body>
+</html>

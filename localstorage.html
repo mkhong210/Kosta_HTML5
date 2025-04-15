@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로컬 스토리지</title>
+    <!-- 25.04.15 - 1 -->
+  </head>
+  <body>
+    키 : <input type="text" id="key" /> 값 : <input type="text" id="data" />
+    <br /><br />
+
+    <input type="button" onclick="saveData()" value="데이터 저장" />
+    <input type="button" onclick="loadData()" value="데이터 읽기" />
+    <input type="button" onclick="removeData()" value="항목 삭제" />
+    <input type="button" onclick="removeAll()" value="전체 삭제" />
+    <br /><br />
+
+    <div id="result"></div>
+    <div id="result2"></div>
+
+    <script>
+      // 데이터 저장하기
+      const keyData = document.getElementById("key");
+      const dData = document.getElementById("data");
+
+      const result = document.getElementById("result");
+      const result2 = document.getElementById("result2");
+
+      function saveData() {
+        console.log(keyData, dData);
+
+        localStorage.setItem(keyData.value, dData.value);
+
+        result.innerHTML = "데이터 저장 완료";
+      }
+
+      // 데이터 가져오기
+      function loadData() {
+        result.innerHTML = "";
+
+        for (let i = 0; i < localStorage.length; i++) {
+          let mykey = localStorage.key(i); // 해당 키 값을 가져오는 메소드
+          let mydata = localStorage.getItem(mykey);
+
+          result2.innerHTML += mykey + " : " + mydata + "<br />";
+        }
+      }
+
+      // 데이터 삭제하기
+      function removeData() {
+        result2.innerHTML = "";
+        localStorage.removeItem(keyData.value);
+        result2.innerHTML = keyData.value + " 항목 삭제";
+      }
+      function removeAll() {
+        result2.innerHTML = "";
+        localStorage.clear();
+        result2.innerHTML = "데이터 전체 삭제";
+      }
+    </script>
+  </body>
+</html>
