@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>웹워커</title>
+    <!-- 25.04.16 - 1 -->
+  </head>
+  <body>
+    <button onclick="stopOperation()">워커 미적용 수행</button>
+    <button onclick="applyWorker()">워커 적용 수행</button>
+    <button onclick="awake()">깨어날 시간</button>
+    <div id="result"></div>
+    <div id="result2"></div>
+
+    <script>
+      // 웹 워커 미적용 수행
+      function stopOperation() {
+        let Time = new Date().getTime();
+        let endTime = Time + 5000;
+        while (Time < endTime);
+        document.getElementById("result").innerHTML = "일어날 시간입니다.";
+      }
+
+      function awake() {
+        alert("일어나야겠지?");
+      }
+
+      // 웹워커 적용 수행
+      function applyWorker() {
+        if (window.Worker) {
+          worker = new Worker("worker.js");
+          worker.postMessage("워커가 동작합니다.");
+          worker.onmessage = function (event) {
+            document.getElementById("result").innerHTML = event.data;
+          };
+          worker.onerror = function (error) {
+            document.getElementById("result2").innerHTML = message + "<br />";
+            document.getElementById("result2").innerHTML = filename + "<br />";
+            document.getElementById("result2").innerHTML = lineno + "<br />";
+          };
+        } else {
+          document.getElementById("result").innerHTML =
+            "현재 브라우저는 지원하지 않습니다.";
+        }
+      }
+    </script>
+  </body>
+</html>
